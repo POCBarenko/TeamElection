@@ -1,0 +1,15 @@
+<template name="election">
+	{{#with currentElection}}
+		<div id="currentElection">
+			<input type="hidden" id="electionId" value={{_id}}>
+			<div class="team">{{team}}</div>
+			<div class="date">{{getDate date}}</div>
+			<button class="finish">Encerrar</button>
+		</div>
+	{{else}}
+		<div>
+			<h4>Não há eleições em andamento</h4>
+			<button class="create">Criar nova eleição</button>
+		</div>
+	{{/with}}
+</template>

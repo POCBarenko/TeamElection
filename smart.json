@@ -1,0 +1,7 @@
+{
+  "packages": {
+    "iron-router": {},
+    "crypto-sha1": {},
+    "crypto-base": {}
+  }
+}

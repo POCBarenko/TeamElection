@@ -1,0 +1,32 @@
+<template name="vote">
+{{#with currentElection}}
+	<input type="hidden" id="electionId" value="{{_id}}">
+	<h1>Votação</h1>
+	{{> ballot}}
+{{/with}}
+</template>
+
+<template name="ballot">
+{{#each team.members}}
+	{{#if isNotMe .}}
+		<div class="ballot">
+		<label class="member">{{.}}</label>
+		<h4>Qualidade mais evidente</h4>
+		<input type="text" maxlenght="25" class="nice">
+
+		<h4>Falha mais evidente</h4>
+		<input type="text" maxlenght="25" class="bad">
+
+		<h4>Avaliação por Características</h4>
+		{{#each ../ballot}}
+			<div class = "attribute">
+				<h5>{{.}}</h5>
+				<input type="number" min=1 max=5 step=1 class="{{.}}">
+			</div>
+		{{/each}}
+		</div>
+	{{/if}}
+{{/each}}
+	<button id="cancelBallot">Cancelar</button>
+	<button id="saveBallot">Salvar</button>
+</template>

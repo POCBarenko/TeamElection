@@ -1,0 +1,32 @@
+<template name="layout">
+<head>
+  <title>1wordDefinition</title>
+</head>
+
+<body>
+	<header>
+		{{> yield region="header"}}
+	    {{> loginButtons}} <!--These are your login-buttons -->
+	</header>
+	<section>
+	{{#if currentUser}}
+		{{> yield}}
+	{{else}}
+		{{> landpage}}
+	{{/if}}
+	</section>
+</body>
+</template>
+
+<template name="header">
+	{{#if currentUser}}
+	<a href="{{pathFor 'team'}}">Meu time</a>	
+	<a href="{{pathFor 'election'}}">Eleições</a>	
+	<a href="{{pathFor 'result'}}">Resultados</a>	
+	{{/if}}
+</template>
+
+
+
+
+

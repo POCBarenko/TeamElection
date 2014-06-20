@@ -1,0 +1,32 @@
+<template name="newElection">
+	{{#with new}}
+	<h4>Formulário para criação de eleição</h4>
+	<label>Time</label>
+	<input type="text" readonly="readonly" class="team" value={{team}}>
+
+	<label>Questionamentos</label>
+
+	<ul class="questions">
+		<li>
+			<div>Melhor qualidade</div> <div>Texto curto</div>
+		</li>
+		<li>
+			<div>Maior falha</div> <div>Texto curto</div>
+		</li>
+		{{#each ballot}}
+			{{> question}}
+		{{/each}}
+	</ul>
+	<button class="add">Adicionar questionamento</button>
+
+	<button class="cancel">Cancelar</button>
+	<button class="save">Ativar eleição</button>
+	{{/with}}
+</template>
+
+<template name="question">
+	<li class="question">
+		<div class="value">{{.}}</div> <div>Nota de 1 a 5</div>
+		<button class="remove">Excluir</button>
+	</li>
+</template>

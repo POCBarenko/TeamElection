@@ -1,0 +1,19 @@
+<template name="results">
+	<h4>Meus resultados</h4>
+	{{#each myResults}}
+		{{> result}}
+	{{/each}}
+</template>
+
+<template name="result">
+	{{date}} {{team}}
+	{{> summary ..}}
+</template>
+
+<template name="summary">
+	<ul>
+	{{#each summarize ..}}
+	<li><div>{{attr}}</div><div>{{value}}</div></li>
+	{{/each}}
+	</ul>
+</template>

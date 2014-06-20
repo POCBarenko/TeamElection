@@ -1,0 +1,22 @@
+<template name="team">
+{{#with myTeams}}
+	<h4>{{name}}</h4> 
+	{{> memberAction}}
+	{{#with currentElection}}
+		<input type="hidden" id="electionId" value="{{_id}}">
+		<button class="vote">Votar</button>
+	{{/with}}
+{{else}}
+	<p>Você não possui nenhum time :(</p>
+	<p><em>Forever alone...</em></p>
+{{/with}}
+</template>
+
+<template name="memberAction">
+	<ul>
+{{#each ./members}}
+	<li>{{.}} 
+	</li>
+{{/each}}
+	</ul>
+</template>
