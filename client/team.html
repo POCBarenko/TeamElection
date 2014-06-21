@@ -1,15 +1,15 @@
 <template name="team">
-{{#with myTeams}}
+{{#each myTeams}}
 	<h4>{{name}}</h4> 
 	{{> memberAction}}
-	{{#with currentElection}}
-		<input type="hidden" id="electionId" value="{{_id}}">
+	{{#with currentElection name}}
+		<input type="hidden" class="electionId" value="{{_id}}">
 		<button class="vote">Votar</button>
 	{{/with}}
 {{else}}
 	<p>Você não possui nenhum time :(</p>
 	<p><em>Forever alone...</em></p>
-{{/with}}
+{{/each}}
 </template>
 
 <template name="memberAction">

@@ -1,10 +1,21 @@
 Template.newElection.new = function(){
 	var election = Session.get('newElection');
 	if(!election){
-		Session.set('newElection', {team:Session.get('team').name, alreadyVoted:[], ballot: [], closed:false, votes:[]});
+		Session.set('newElection', {
+			team:Teams.findOne().name, 
+			alreadyVoted:[], 
+			ballot: [], 
+			closed:false, 
+			votes:[],
+			owner: Meteor.userId()
+		});
 	}
 
 	return Session.get('newElection');
+};
+
+Template.newElection.teams = function(){
+	return Teams.find();
 };
 
 Template.newElection.events({
@@ -27,6 +38,10 @@ Template.newElection.events({
 			Session.set('newElection', null);
 			Router.go('team');
 		}
+	},
+	'change .team' : function(ev){
+		var election = Session.get('newElection');
+		election.team = $('.team').val();
 	},
 	'click .add' : function(ev){
 		var value = prompt('Qual a nova característica?');

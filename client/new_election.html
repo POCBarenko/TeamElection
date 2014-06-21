@@ -2,7 +2,12 @@
 	{{#with new}}
 	<h4>Formulário para criação de eleição</h4>
 	<label>Time</label>
-	<input type="text" readonly="readonly" class="team" value={{team}}>
+	<select class="team">
+		<option></option>
+		{{#each teams}}
+		<option>{{name}}</option>
+		{{/each}}
+	</select>
 
 	<label>Questionamentos</label>
 

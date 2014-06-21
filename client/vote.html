@@ -1,5 +1,5 @@
 <template name="vote">
-{{#with currentElection}}
+{{#with currentElection .}}
 	<input type="hidden" id="electionId" value="{{_id}}">
 	<h1>Votação</h1>
 	{{> ballot}}

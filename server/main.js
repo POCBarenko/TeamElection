@@ -1,6 +1,5 @@
 Meteor.startup(function () {
   console.log('starting...');
-  console.log(Teams.find().count());
   if(Teams.find().count() === 0){
     console.log('adding fixture teams');
     var prev = Teams.findOne();
@@ -14,12 +13,13 @@ Meteor.startup(function () {
     if(prev) Elections.remove(prev._id);
     var date = new Date();
     date.setHours(0,0,0);
-    Elections.insert({_id: '2', date: date, team:'SEM', alreadyVoted:['user2'], ballot: ['envolvimento','companheirismo'], closed:false, votes:[
+    Elections.insert({_id: '2', date: date, team:'MEU_TIME', iVoted:false, alreadyVoted:['user2'], ballot: ['envolvimento','companheirismo'], closed:false, votes:[
       {name:'user1', type:'_nice_', value:'inteligente'},
       {name:'user1', type:'_nice_', value:'esperto'},
       {name:'user1', type:'_bad_', value:'introspectivo'},
       {name:'user1', type:'espírito de equipe', value:4},
       {name:'user1', type:'envolvimento', value:4},
+      {name:'user2', type:'badass', value:4},
       {name:'user1', type:'companheirismo', value:2},
     ]});
   }

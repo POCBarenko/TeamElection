@@ -20,7 +20,7 @@ Template.election.events({
 				_id: $(ev.currentTarget.parentElement).find('#electionId').val()
 			}, {
 				$set: {
-					'closed': true
+					closed: true
 				}
 			});
 		}

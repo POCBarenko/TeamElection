@@ -1,19 +1,14 @@
 Template.team.myTeams = function() {
-	var team = Teams.findOne({
-		members: Meteor.user().username
-	});
-	Session.set('team', team);
-	return team;
+	return Teams.find();
 };
 
-Template.team.currentElection = function(user) {
-	var team = Session.get('team').name;
+Template.team.currentElection = function(teamName) {
 	var election = Elections.findOne({
 		closed: false,
-		team: team
+		team: teamName
 	});
 	if(!election) return null;
-	if (election.alreadyVoted.indexOf(Utils.getUsername()) === -1)
+	if (!election.iVoted)
 		return election;
 	return null;
 };
@@ -21,7 +16,7 @@ Template.team.currentElection = function(user) {
 Template.team.events({
 	'click button': function(ev) {
 		Router.go('vote', {
-			_id: $("#electionId").val()
+			_id: $(".electionId").parent().find(".electionId").val()
 		});
 	}
 });

@@ -1,17 +1,11 @@
-Template.vote.currentElection = function(user) {
-	var team = Session.get('team').name;
-	var election = Elections.findOne({
-		closed: false,
-		team: team
-	});
-	var alreadyVoted = election.alreadyVoted[Meteor.user().username];
-	if (!alreadyVoted || alreadyVoted.indexOf(user) < 0)
-		return election;
+Template.vote.currentElection = function() {
+	if (!this.iVoted)
+		return this;
 	return null;
 };
 
 Template.ballot.team = function() {
-	return Session.get('team');
+	return Teams.findOne({name: this.team});
 };
 
 Template.ballot.isNotMe = function(member) {
@@ -74,7 +68,7 @@ Template.ballot.events({
 				_id: electionId
 			}, {
 				$addToSet: {
-					"alreadyVoted": Utils.getUsername(),
+					"alreadyVoted": Meteor.user().username,
 					"votes": {
 						$each: votes
 					}
