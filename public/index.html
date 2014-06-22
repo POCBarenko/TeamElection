@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Eleições Rápidas</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/style.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+<script type="text/x-handlebars">
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Opinião Discreta</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Opinião Discreta</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li>{{#link-to 'teams'}}Meus times{{/link-to}}</li>
+            <li>{{#link-to 'elections'}}Pesquisas de Opinião{{/link-to}}</li>
+            <li>{{#link-to 'results'}}Resultados{{/link-to}}</li>
+            <li class="hide dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="hide"><a href="../navbar/">Default</a></li>
+            <li class="hide"><a href="../navbar-static-top/">Static top</a></li>
+            <li class="hide active"><a href="./">Fixed top</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div>
+    		{{outlet}}
+    </div>
+
+    </div> <!-- /container -->
+</script>
+
+<script type="text/x-handlebars" id="teams">
+
+<div class="row">
+<div class="col-sm-12">
+<div class="panel panel-info">
+<div class="panel-heading">
+	<h3>Meus times</h3>
+	{{#unless showNewForm}}
+	<button {{action 'newToggle'}} class="btn btn-default btn-xs">Criar Novo time</button>
+	{{/unless}}
+</div>
+<div class="panel-body">
+<div class="col-xs-12">
+{{#if showNewForm}}
+	{{partial 'teams/new'}}
+{{/if}}
+</div>
+
+
+{{#each}}
+	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+	<div class="row">
+	<div class="col-xs-12">
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>
+				{{name}} 
+				<button {{action removeTeam this}} class="btn btn-danger btn-xs">
+					<span class="glyphicon glyphicon-remove"></span>
+				</button>
+			</h4>
+		</div>
+		<div class="panel-body">
+		<div class="row">
+		<div class="col-sm-12">
+			<h4>Participantes</h4>
+			<ul class="list-group">
+				{{#each ./members}}
+					<li class="list-group-item">
+						<span class="badge">{{./role}}</span>
+						{{./name}}
+					</li>
+				{{else}}
+					<p>Um time sem membros é igual uma feijoada sem feijão :(</p>
+				{{/each}}
+			</ul>
+		</div>
+		<div class="col-sm-12">
+			<h4>Pesquisas abertas</h4>
+			<ul class="list-group">
+				{{#each currentElections}}
+					<li class="list-group-item">
+					<div class="row">
+					<div class="col-xs-8 col-sm-7">
+						<h4 class="list-group-item-heading">{{./name}}</h4>
+					</div>
+					<div class="col-xs-3 col-xs-offset-1 col-sm-4 col-md-offset-0">
+					{{#if iVoted}}
+						<button disabled class="btn btn-default btn-sm"><span class="glyphicon glyphicon-check"></span> Já Opinei</button>
+					{{else}}
+						<button class="btn btn-success btn-sm" {{action 'vote'}}><span class="glyphicon glyphicon-edit"></span> Opinar</button>
+					{{/if}}
+					</div>
+					</div>
+					</li>
+				{{else}}
+					<p>Nenhuma pesquisa aberta. Não quer saber a opinião do seu time?</p>
+					<button class="btn btn-primary btn-sm btn-block" {{action 'vote'}}><span class="glyphicon glyphicon-screenshot"></span> Criar uma nova pesquisa</button>
+				{{/each}}
+			</ul>
+		</div>
+		</div>
+		</div>
+	</div>
+
+	</div>
+	</div>
+	</div>
+{{else}}
+	<p>Você não possui nenhum time :(</p>
+	<p><em>Forever alone...</em></p>
+{{/each}}
+
+</div>
+</div>
+</div>
+</div>
+</script>
+
+<script type="text/x-handlebars" id="teams/new">
+<div class="panel panel-default">
+  <div class="panel-heading">Cadastrar Novo Time</div>
+  <div class="panel-body">
+	<form role="form">
+	  <div class="form-group" {{bind-attr class="formNewTeamValidation.title"}}>
+	    <label for="team">Time</label>
+	    {{input value=newTitle class="form-control" id="team" placeholder="Nome do time" maxlenght="30"}}
+	    {{#if formNewTeamValidation.title}}
+	    	<p class="help-block">O nome do time não pode ser nulo</p>
+	    {{/if}}
+	  </div>
+	  <div class="form-group" {{bind-attr class="formNewTeamValidation.members"}}>
+	    <label for="members">Membros do time</label>
+	    {{textarea value=newMembers class="form-control" id="members" placeholder="Membros do time separado por , ou ; ou :"}}
+	    {{#if formNewTeamValidation.members}}
+	    	<p class="help-block">Não pode haver time sem membros</p>
+	    {{/if}}
+	  </div>
+	  <button class="btn btn-success" {{action 'createTeam'}}>Criar</button>
+	  <button class="btn btn-danger" {{action 'cancel'}}>Cancelar</button>
+	</form>
+  </div>
+</div>
+</script>
+
+
+<script type="text/x-handlebars" id="elections">
+    	eleicoes!!!
+</script>
+
+<script type="text/x-handlebars" id="vote">
+		<ul>
+		{{#each ./members}}
+			<li>{{.}}</li>
+		{{/each}}
+		</ul>
+</script>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.compat.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ember.js/1.5.1/ember.debug.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>

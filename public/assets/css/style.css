@@ -1,0 +1,8 @@
+body {
+  min-height: 2000px;
+  padding-top: 70px;
+}
+
+a.active, .navbar-nav>li>a.active:hover{
+	background-color: #e7e7e7;
+}
